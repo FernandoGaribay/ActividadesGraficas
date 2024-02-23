@@ -42,7 +42,7 @@ public class EspiralArquimides_08 extends JFrame {
 
         JButton button = new JButton("Iniciar");
         button.setPreferredSize(new Dimension(100, 30));
-        button.setFocusPainted(false); // Remueve el borde de enfoque
+        button.setFocusPainted(false); 
         button.setFont(new Font("Arial", Font.PLAIN, 14));
         button.setBackground(Color.WHITE);
         button.setForeground(Color.BLACK);
