@@ -13,7 +13,6 @@ import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 public class EspiralArquimides_08 extends JPanel implements Runnable {
 
@@ -23,19 +22,22 @@ public class EspiralArquimides_08 extends JPanel implements Runnable {
     private final double RADIO_INCREMENTO = 0.5;
     private final double ANGULO_INCREMENTO = 0.1;
     private final double ANGULO_FIN = 12 * Math.PI;
-    private final int DELAY = 10;
+    private final int DELAY = 15;
+
+    private int CENTRO_X = WIDTH / 2;
+    private int CENTRO_Y = HEIGHT / 2 - 15; // 15 es la mitad del height del boton
 
     private double angulo = 0.0;
     private double radio = 10;
-    private int CENTER_X = WIDTH / 2;
-    private int CENTER_Y = HEIGHT / 2 - 15; // 15 es la mitad del height del boton
-
-    private Timer timer;
+    private Thread hiloAnimacion;
+    
     private BufferedImage buffer;
 
     public EspiralArquimides_08() {
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-
+        this.hiloAnimacion = new Thread(this);
+        this.buffer = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        
         JButton button = new JButton("Iniciar");
         button.setPreferredSize(new Dimension(100, 30));
         button.setFocusPainted(false);
@@ -48,21 +50,7 @@ public class EspiralArquimides_08 extends JPanel implements Runnable {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (timer != null && timer.isRunning()) {
-                    timer.stop();
-                }
-                timer = new Timer(DELAY, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        dibujarEspiral();
-                        repaint();
-
-                        if (angulo >= ANGULO_FIN) {
-                            timer.stop();
-                        }
-                    }
-                });
-                timer.start();
+                hiloAnimacion.start();
             }
         });
     }
@@ -70,10 +58,6 @@ public class EspiralArquimides_08 extends JPanel implements Runnable {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-
-        if (buffer == null) {
-            buffer = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
-        }
 
         g.drawImage(buffer, 0, 0, null);
     }
@@ -85,35 +69,40 @@ public class EspiralArquimides_08 extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        
-    }
-    
-    public void dibujarEspiral() {
-        Graphics2D g2 = (Graphics2D) buffer.getGraphics();
-        g2.setColor(Color.BLACK);
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        while (angulo <= ANGULO_FIN) {
+            Graphics2D g2 = (Graphics2D) buffer.getGraphics();
+            g2.setColor(Color.BLACK);
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        int x = (int) (CENTER_X + radio * Math.cos(angulo) * -1);
-        int y = (int) (CENTER_Y + radio * Math.sin(angulo)  * -1);
-        
-        int x2 = (int) (CENTER_X + radio * Math.cos(angulo));
-        int y2 = (int) (CENTER_Y + radio * Math.sin(angulo));
+            int x = (int) (CENTRO_X + radio * Math.cos(angulo) * -1);
+            int y = (int) (CENTRO_Y + radio * Math.sin(angulo) * -1);
 
-        angulo += ANGULO_INCREMENTO;
-        radio += RADIO_INCREMENTO;
+            int x2 = (int) (CENTRO_X + radio * Math.cos(angulo));
+            int y2 = (int) (CENTRO_Y + radio * Math.sin(angulo));
 
-        int xNext = (int) (CENTER_X + radio * Math.cos(angulo) * -1);
-        int yNext = (int) (CENTER_Y + radio * Math.sin(angulo) * -1);
-        
-        int x2Next = (int) (CENTER_X + radio * Math.cos(angulo));
-        int y2Next = (int) (CENTER_Y + radio * Math.sin(angulo));
+            angulo += ANGULO_INCREMENTO;
+            radio += RADIO_INCREMENTO;
 
-        g2.setColor(Color.BLACK);
-        g2.drawLine(x, y, xNext, yNext);
-        g2.drawLine(x2, y2, x2Next, y2Next);
-        g2.drawLine((int)(CENTER_X - 10), CENTER_Y, (int) (CENTER_X + 10), CENTER_Y);
-        
-        g2.dispose();
+            int xNext = (int) (CENTRO_X + radio * Math.cos(angulo) * -1);
+            int yNext = (int) (CENTRO_Y + radio * Math.sin(angulo) * -1);
+
+            int x2Next = (int) (CENTRO_X + radio * Math.cos(angulo));
+            int y2Next = (int) (CENTRO_Y + radio * Math.sin(angulo));
+
+            g2.setColor(Color.BLACK);
+            g2.drawLine(x, y, xNext, yNext);
+            g2.drawLine(x2, y2, x2Next, y2Next);
+            g2.drawLine((int) (CENTRO_X - 10), CENTRO_Y, (int) (CENTRO_X + 10), CENTRO_Y); // 10 es el radio inicial
+
+            g2.dispose();
+            repaint();
+            
+            try {
+                Thread.sleep(DELAY);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static void main(String[] args) {
