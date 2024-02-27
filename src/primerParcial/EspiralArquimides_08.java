@@ -44,8 +44,9 @@ public class EspiralArquimides_08 extends JPanel implements Runnable {
         button.setFont(new Font("Arial", Font.PLAIN, 14));
         button.setBackground(Color.WHITE);
         button.setForeground(Color.BLACK);
-        setLayout(new BorderLayout());
-        add(button, BorderLayout.SOUTH);
+        
+        this.setLayout(new BorderLayout());
+        this.add(button, BorderLayout.SOUTH);
 
         button.addActionListener(new ActionListener() {
             @Override
