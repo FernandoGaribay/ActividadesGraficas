@@ -7,13 +7,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-public class LineaRectaMejorada_02 extends JPanel {
+public class Rectangulo_06 extends JPanel {
 
     BufferedImage buffer;
     private int WIDTH;
     private int HEIGHT;
 
-    public LineaRectaMejorada_02(Color color, int width, int height) {
+    public Rectangulo_06(Color color, int width, int height) {
         setBackground(color);
         setSize(width, height);
 
@@ -23,32 +23,31 @@ public class LineaRectaMejorada_02 extends JPanel {
     }
 
     public void drawLine(int x0, int y0, int x1, int y1, Color color) {
-        if (x0 == x1) {
-            drawVerticalLine(x0, y0, y1, color);
-            return;
+        int dx = x1 - x0;
+        int dy = y1 - y0;
+
+        int pasos = Math.max(Math.abs(dx), Math.abs(dy));
+
+        float xIncremento = (float) dx / pasos;
+        float yIncremento = (float) dy / pasos;
+
+        float x = x0;
+        float y = y0;
+
+        for (int i = 0; i <= pasos; i++) {
+            putPixel(Math.round(x), Math.round(y), color);
+            x += xIncremento;
+            y += yIncremento;
         }
 
-        float m = (float) (y1 - y0) / (x1 - x0);
-        float b = y0 - m * x0;
-
-        int minX = Math.min(x0, x1);
-        int maxX = Math.max(x0, x1);
-
-        for (int x = minX; x <= maxX; x++) {
-            int y = Math.round(m * x + b);
-            putPixel(x, y, color);
-        }
         repaint();
     }
 
-    private void drawVerticalLine(int x, int y0, int y1, Color color) {
-        int minY = Math.min(y0, y1);
-        int maxY = Math.max(y0, y1);
-
-        for (int y = minY; y <= maxY; y++) {
-            putPixel(x, y, color);
-        }
-        repaint();
+    public void drawRectangle(int x0, int y0, int x1, int y1, Color color) {
+        drawLine(x0, y0, x1, y0, color);
+        drawLine(x0, y0, x0, y1, color);
+        drawLine(x1, y0, x1, y1, color);
+        drawLine(x0, y1, x1, y1, color);
     }
 
     private void putPixel(int x, int y, Color color) {
@@ -71,12 +70,12 @@ public class LineaRectaMejorada_02 extends JPanel {
         frame.setLayout(null);
         frame.setLocationRelativeTo(null);
 
-        LineaRectaMejorada_02 panel1 = new LineaRectaMejorada_02(Color.WHITE, 500, 500);
+        Rectangulo_06 panel1 = new Rectangulo_06(Color.WHITE, 500, 500);
         panel1.setLocation(0, 0);
         frame.add(panel1);
 
         frame.setVisible(true);
 
-        panel1.drawLine(50, 50, 250, 250, Color.BLACK);
+        panel1.drawRectangle(50, 50, 150, 100, Color.BLACK);
     }
 }

@@ -7,13 +7,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-public class LineaRectaMejorada_02 extends JPanel {
+public class CoordenadasPolares_08 extends JPanel {
 
     BufferedImage buffer;
     private int WIDTH;
     private int HEIGHT;
 
-    public LineaRectaMejorada_02(Color color, int width, int height) {
+    public CoordenadasPolares_08(Color color, int width, int height) {
         setBackground(color);
         setSize(width, height);
 
@@ -22,30 +22,10 @@ public class LineaRectaMejorada_02 extends JPanel {
         buffer = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
     }
 
-    public void drawLine(int x0, int y0, int x1, int y1, Color color) {
-        if (x0 == x1) {
-            drawVerticalLine(x0, y0, y1, color);
-            return;
-        }
-
-        float m = (float) (y1 - y0) / (x1 - x0);
-        float b = y0 - m * x0;
-
-        int minX = Math.min(x0, x1);
-        int maxX = Math.max(x0, x1);
-
-        for (int x = minX; x <= maxX; x++) {
-            int y = Math.round(m * x + b);
-            putPixel(x, y, color);
-        }
-        repaint();
-    }
-
-    private void drawVerticalLine(int x, int y0, int y1, Color color) {
-        int minY = Math.min(y0, y1);
-        int maxY = Math.max(y0, y1);
-
-        for (int y = minY; y <= maxY; y++) {
+    public void drawCircle(int xc, int yc, int R, Color color) {
+        for (int t = 0; t <= 360; t++) {
+            int x = (int) (xc + R * Math.sin(Math.toRadians(t)));
+            int y = (int) (yc + R * Math.cos(Math.toRadians(t)));
             putPixel(x, y, color);
         }
         repaint();
@@ -71,12 +51,12 @@ public class LineaRectaMejorada_02 extends JPanel {
         frame.setLayout(null);
         frame.setLocationRelativeTo(null);
 
-        LineaRectaMejorada_02 panel1 = new LineaRectaMejorada_02(Color.WHITE, 500, 500);
+        CoordenadasPolares_08 panel1 = new CoordenadasPolares_08(Color.WHITE, 500, 500);
         panel1.setLocation(0, 0);
         frame.add(panel1);
 
         frame.setVisible(true);
 
-        panel1.drawLine(50, 50, 250, 250, Color.BLACK);
+        panel1.drawCircle(250, 250, 150, Color.BLACK);
     }
 }

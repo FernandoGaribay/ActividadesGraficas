@@ -62,10 +62,3 @@ public class LineaRecta_01 extends JPanel {
         panel1.drawLine(50, 50, 300, 250, Color.BLACK);
     }
 }
-
-/*
-División por cero: No hay control para cuando x1 y x0 son iguales, lo que resultaría en una división por cero al calcular m (pendiente) en drawLine.
-Redondeo inapropiado: El redondeo de la coordenada y en drawLine se realiza utilizando Math.round, lo que puede llevar a un desplazamiento vertical inesperado de la línea en algunos casos.
-Posición de la línea: La línea se dibuja utilizando el algoritmo de la pendiente, lo que puede producir resultados no deseados para líneas verticales o casi verticales.
-Manejo de colores: El método drawLine toma un color como parámetro, pero no se usa en el método putPixel.
-*/
