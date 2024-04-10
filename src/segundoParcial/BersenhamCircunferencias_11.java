@@ -7,13 +7,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-public class Circunferencia_07 extends JPanel {
+public class BersenhamCircunferencias_11 extends JPanel {
 
     BufferedImage buffer;
     private int WIDTH;
     private int HEIGHT;
 
-    public Circunferencia_07(Color color, int width, int height) {
+    public BersenhamCircunferencias_11(Color color, int width, int height) {
         setBackground(color);
         setSize(width, height);
 
@@ -23,14 +23,29 @@ public class Circunferencia_07 extends JPanel {
     }
 
     public void drawCircle(int xc, int yc, int R, Color color) {
-        for (int x = xc - R; x <= xc + R; x++) {
-            int y = (int) Math.round(yc + Math.sqrt(Math.pow(R, 2) - Math.pow(x - xc, 2)));
-            putPixel(x, y, color);
+        int x = 0;
+        int y = R;
+        int d = 3 - (2 * R);
 
-            y = (int) Math.round(yc - Math.sqrt(Math.pow(R, 2) - Math.pow(x - xc, 2)));
-            putPixel(x, y, color);
+        while (x <= y) {
+            if (d <= 0) {
+                d = d + 4 * x + 6;
+            } else {
+                d = d + 4 * (x - y) + 10;
+                y--;
+            }
+
+            putPixel(xc + x, yc + y, color); // Octante 1
+            putPixel(xc + y, yc + x, color); // Octante 2
+            putPixel(xc + y, yc - x, color); // Octante 3
+            putPixel(xc + x, yc - y, color); // Octante 4
+            putPixel(xc - x, yc - y, color); // Octante 5
+            putPixel(xc - y, yc - x, color); // Octante 6
+            putPixel(xc - y, yc + x, color); // Octante 7
+            putPixel(xc - x, yc + y, color); // Octante 8
+
+            x++;
         }
-        
         repaint();
     }
 
@@ -54,7 +69,7 @@ public class Circunferencia_07 extends JPanel {
         frame.setLayout(null);
         frame.setLocationRelativeTo(null);
 
-        Circunferencia_07 panel1 = new Circunferencia_07(Color.WHITE, 500, 500);
+        BersenhamCircunferencias_11 panel1 = new BersenhamCircunferencias_11(Color.WHITE, 500, 500);
         panel1.setLocation(0, 0);
         frame.add(panel1);
 
@@ -63,9 +78,3 @@ public class Circunferencia_07 extends JPanel {
         panel1.drawCircle(250, 250, 150, Color.BLACK);
     }
 }
-
-/*
-Eficiencia: El metodo no es eficiente. Calcula dos veces el valor de la función raíz cuadrada para cada valor de x, lo cual es costoso computacionalmente.
-Precisión de los cálculos: Al calcular la raíz cuadrada, se pueden encontrar con problemas de precisión, lo cual puede llevar a errores en el dibujo de la circunferencia.
-Espaciado de píxeles no uniforme: Este método puede resultar en un espaciado no uniforme entre los píxeles dibujados, lo que puede llevar a una apariencia de circunferencia pixelada o irregular.
-*/

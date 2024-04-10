@@ -27,10 +27,19 @@ public class Bresenham_04 extends JPanel {
         super.paint(g);
     }
 
-    private void drawLine(Color color, int x1, int y1, int x2, int y2) {
+    private void drawLine(int x0, int y0, int x1, int y1, Color color) {
         int incyi, incxi, incyr, incxr, aux, avr, av, avi;
-        int dx = x2 - x1;
-        int dy = y2 - y1;
+        int dx = x1 - x0;
+        int dy = y1 - y0;
+
+        if (x0 == x1) {
+            drawVerticalLine(x0, y0, y1, color);
+            return;
+        }
+        if (y0 == y1) {
+            drawHorizontalLine(y0, x0, x1, color);
+            return;
+        }
 
         if (dy >= 0) {
             incyi = 1;
@@ -38,15 +47,15 @@ public class Bresenham_04 extends JPanel {
             dy = -dy;
             incyi = -1;
         }
-        
-        if(dx >= 0){
+
+        if (dx >= 0) {
             incxi = 1;
         } else {
             dx = -dx;
             incxi = -1;
         }
-        
-        if(dx >= dy){
+
+        if (dx >= dy) {
             incyr = 0;
             incxr = incxi;
         } else {
@@ -56,15 +65,15 @@ public class Bresenham_04 extends JPanel {
             dx = dy;
             dy = aux;
         }
-        
-        int x = x1;
-        int y = y1;
+
+        int x = x0;
+        int y = y0;
         avr = 2 * dy;
         av = avr - dx;
         avi = av - dx;
         do {
             putPixel(x, y, color);
-            if(av >= 0){
+            if (av >= 0) {
                 x = x + incxi;
                 y = y + incyi;
                 av = av + avi;
@@ -73,8 +82,28 @@ public class Bresenham_04 extends JPanel {
                 y = y + incyr;
                 av = av + avr;
             }
-        }while(x != x2);
+        } while (x != x1);
 
+        repaint();
+    }
+
+    private void drawVerticalLine(int x, int y0, int y1, Color color) {
+        int minY = Math.min(y0, y1);
+        int maxY = Math.max(y0, y1);
+
+        for (int y = minY; y <= maxY; y++) {
+            putPixel(x, y, color);
+        }
+        repaint();
+    }
+
+    private void drawHorizontalLine(int y, int x0, int x1, Color color) {
+        int minY = Math.min(x0, x1);
+        int maxY = Math.max(x0, x1);
+
+        for (int x = minY; x <= maxY; x++) {
+            putPixel(x, y, color);
+        }
         repaint();
     }
 
@@ -104,6 +133,6 @@ public class Bresenham_04 extends JPanel {
 
         frame.setVisible(true);
 
-        panel1.drawLine(Color.BLACK, 50, 50, 100, 300);
+        panel1.drawLine(50, 50, 300, 300, Color.BLACK);
     }
 }

@@ -80,3 +80,12 @@ public class LineaRectaMejorada_02 extends JPanel {
         panel1.drawLine(50, 50, 250, 250, Color.BLACK);
     }
 }
+
+/*
+Cambios realizados:
+
+Division entre 0: Se valida si x0 es igual a x1 para asi evitar que el cálculo de la pendiente (m) sea dividido por 0,
+Lineas Verticales: Se agregó un chequeo para líneas verticales en drawLine, que llama a un método especializado drawVerticalLine, ya que el metodo original no dibuja lineas en 90 grados.
+Redondeo inapropiado: Se eliminó el redondeo en drawLine para evitar desplazamientos verticales inesperados. y = (int) (Math.round(m * x + b)) -> y = Math.round(m * x + b);
+A pesar de los cambios la ecuacion y = mx + b al calcularse com m la recta puede fallar para lineas casi rectas, ya que en una pantalla de píxeles, cada punto se representa por un píxel individual. La ecuación y = mx + b puede generar puntos que no son necesariamente píxeles (decimales), lo que puede llevar a líneas que se ven "irregulares" o "dientes de sierra" en la pantalla.
+*/

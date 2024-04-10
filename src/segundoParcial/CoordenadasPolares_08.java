@@ -60,3 +60,14 @@ public class CoordenadasPolares_08 extends JPanel {
         panel1.drawCircle(250, 250, 150, Color.BLACK);
     }
 }
+
+/*
+Complejidad:
+La forma en que se está dibujando el círculo utilizando coordenadas polares en un bucle de 0 a 360 grados es ineficiente y no garantiza que cada píxel esté llenado adecuadamente.
+Esto puede llevar a agujeros en el círculo y no es una representación precisa de un círculo, especialmente para radios grandes.
+La complejidad es alta debido al bucle de 0 a 360 grados, lo que puede llevar a un rendimiento subóptimo para círculos grandes.
+
+Precisión y redondeo:
+La conversión de las coordenadas calculadas a enteros puede resultar en pérdida de precisión y en agujeros en el círculo.
+Los valores de seno y coseno no son exactos, y al redondear a enteros, los píxeles pueden quedar sin llenar o se pueden dibujar píxeles incorrectos.
+*/

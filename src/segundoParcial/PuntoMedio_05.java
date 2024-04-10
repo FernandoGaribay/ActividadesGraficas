@@ -83,3 +83,30 @@ public class PuntoMedio_05 extends JPanel {
         panel1.drawLine(Color.BLACK, 50, 50, 100, 400);
     }
 }
+
+/*
+Algoritmo de Bresenham (Bresenham_04)
+
+Rendimiento matemático:
+El algoritmo de Bresenham utiliza operaciones aritméticas simples como sumas y restas, lo que lo hace eficiente en términos de rendimiento matemático, ya que las operaciones de multiplicación son evitadas, lo que es una ventaja en términos de rendimiento en comparación con algoritmos que pueden requerir multiplicaciones.
+
+Espaciado entre píxeles:
+Dado que solo hay dos opciones de incremento por cada paso, las líneas dibujadas con este algoritmo tienen un espaciado uniforme entre píxeles en la dirección x e y, lo que las hace visualmente más limpias y precisas.
+
+Velocidad:
+El algoritmo de Bresenham es conocido por ser rápido y eficiente, lo que lo hace ideal para aplicaciones en tiempo real donde se necesita dibujar líneas rápidamente.
+Debido a su eficiencia en el uso de operaciones básicas y su capacidad para trazar líneas con un espaciado uniforme, es una elección popular para gráficos interactivos y juegos.
+
+
+Algoritmo de Punto Medio (PuntoMedio_05)
+
+Rendimiento matemático:
+El algoritmo de punto medio también utiliza operaciones aritméticas simples como sumas y restas, así como comparaciones básicas (1 multiplicacion).
+Aunque es un poco más complejo que el algoritmo de Bresenham, todavía es eficiente en términos de rendimiento matemático.
+
+Espaciado entre píxeles:
+Al igual que el algoritmo de Bresenham, las líneas dibujadas con este algoritmo tienen un espaciado uniforme en la dirección x e y, lo que las hace visualmente precisas.
+
+Velocidad:
+Aunque sigue siendo eficiente y adecuado para la mayoría de las aplicaciones de gráficos, puede ser menos óptimo en términos de velocidad en comparación con el algoritmo de Bresenham.
+*/

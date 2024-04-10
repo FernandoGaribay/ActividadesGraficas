@@ -69,3 +69,18 @@ public class SimetriaOchoLados_09 extends JPanel {
         panel1.drawCircle(250, 250, 150, Color.BLACK);
     }
 }
+
+/*
+Ventajas:
+1. Eficiencia en cálculos:
+Utilizando la simetría de ocho lados, se evita repetir cálculos al dibujar el círculo. En lugar de calcular y dibujar los 360 grados completos, se reduce a solo 45 grados.
+El bucle for (int t = 0; t <= 45; t++) cubre solo un octavo del círculo, lo que significa menos iteraciones y cálculos.
+2. Menos código redundante:
+El código es más compacto y fácil de entender debido a la reducción de casos y repeticiones. No se necesita repetir el mismo cálculo para los otros siete octantes.
+3. Claridad y mantenimiento:
+Al usar coordenadas polares y simetría de ocho lados, el código refleja directamente la idea geométrica del problema, lo que lo hace más claro y fácil de mantener en el futuro.
+4. Mejora del rendimiento:
+Debido a que se realizan menos cálculos, el rendimiento general del algoritmo mejora. Es especialmente útil en situaciones donde se necesitan dibujar muchos círculos o curvas similares.
+5. Precisión:
+Al usar funciones trigonométricas estándar, se asegura una mayor precisión en los cálculos, especialmente cuando se dibujan formas a escalas diferentes.
+*/

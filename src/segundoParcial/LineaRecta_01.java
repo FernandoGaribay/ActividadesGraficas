@@ -26,7 +26,10 @@ public class LineaRecta_01 extends JPanel {
         float m = (float) ((y1 - y0)) / (x1 - x0);
         float b = y0 - m * x0;
 
-        for (int x = Math.min(x0, x1); x <= Math.max(x0, x1); x++) {
+        int nx0 = Math.min(x0, x1);
+        int nx1 = Math.max(x0, x1);
+
+        for (int x = nx0; x <= nx1; x++) {
             int y = (int) (Math.round(m * x + b));
             putPixel(x, y, color);
         }
@@ -62,3 +65,11 @@ public class LineaRecta_01 extends JPanel {
         panel1.drawLine(50, 50, 300, 250, Color.BLACK);
     }
 }
+
+/*
+
+Division entre 0: El cálculo de la pendiente (m) es riesgoso ya que podría haber una división por cero si x1 - x0 es igual a 0. Es importante manejar este caso de dibujar una linea recta para evitar errores.
+Redondeo inapropiado: Debido al redondeo en int y = (int) (Math.round(m * x + b));, la precisión de los puntos dibujados puede no ser ideal en algunas situaciones. Esto puede llevar a líneas que no se ven perfectamente rectas en ciertos ángulos.
+Posición de la línea: La línea se dibuja utilizando el algoritmo de la pendiente, lo que puede producir resultados no deseados para líneas verticales o casi verticales (entre mas cerca esten de los 90 grados).
+La ecuación y=mx+b no está directamente enmarcada en la matriz discreta de píxeles, que está compuesta por valores enteros. En un contexto de dibujo de líneas en una pantalla, como se trabaja con píxeles individuales, necesitas encontrar una manera de mapear los puntos de la línea a píxeles específicos en la matriz de píxeles.
+*/
