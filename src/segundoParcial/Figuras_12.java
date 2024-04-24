@@ -50,70 +50,70 @@ public class Figuras_12 extends JPanel {
         drawLine(x1, y0, x1, y1, color);
     }
 
-    public void drawCircle(int xc, int yc, int R, Color color) {
-        int x = 0;
-        int y = R;
-        int d = 3 - (2 * R);
+    public void drawCircle(int x, int y, int radio, Color color) {
+        int xx = 0;
+        int yy = radio;
+        int d = 3 - (2 * radio);
 
-        while (x <= y) {
+        while (xx <= yy) {
             if (d <= 0) {
-                d = d + 4 * x + 6;
+                d = d + 4 * xx + 6;
             } else {
-                d = d + 4 * (x - y) + 10;
-                y--;
+                d = d + 4 * (xx - yy) + 10;
+                yy--;
             }
 
-            putPixel(xc + x + R, yc + y + R, color); // Octante 1
-            putPixel(xc + y + R, yc + x + R, color); // Octante 2
-            putPixel(xc + y + R, yc - x + R, color); // Octante 3
-            putPixel(xc + x + R, yc - y + R, color); // Octante 4
-            putPixel(xc - x + R, yc - y + R, color); // Octante 5
-            putPixel(xc - y + R, yc - x + R, color); // Octante 6
-            putPixel(xc - y + R, yc + x + R, color); // Octante 7
-            putPixel(xc - x + R, yc + y + R, color); // Octante 8
+            putPixel(x + xx + radio, y + yy + radio, color); // Octante 1
+            putPixel(x + yy + radio, y + xx + radio, color); // Octante 2
+            putPixel(x + yy + radio, y - xx + radio, color); // Octante 3
+            putPixel(x + xx + radio, y - yy + radio, color); // Octante 4
+            putPixel(x - xx + radio, y - yy + radio, color); // Octante 5
+            putPixel(x - yy + radio, y - xx + radio, color); // Octante 6
+            putPixel(x - yy + radio, y + xx + radio, color); // Octante 7
+            putPixel(x - xx + radio, y + yy + radio, color); // Octante 8
 
-            x++;
+            xx++;
         }
         repaint();
     }
 
-    public void drawEllipse(int xc, int yc, int a, int b, Color color) {
-        int x = 0;
-        int y = b;
-        int aSquared = a * a;
-        int bSquared = b * b;
-        double p0 = bSquared - aSquared * b + 0.25 * aSquared;
+    public void drawEllipse(int x, int y, int width, int height, Color color) {
+        int xx = 0;
+        int yy = height;
+        int widthCuadrado = width * width;
+        int heightCuadrado = height * height;
+        double p0 = heightCuadrado - widthCuadrado * height + 0.25 * widthCuadrado;
 
-        while (2 * bSquared * x < 2 * aSquared * y) {
-            putPixel(xc + x + a, yc + y + b, color); // Región 1
-            putPixel(xc - x + a, yc + y + b, color); // Región 2
-            putPixel(xc - x + a, yc - y + b, color); // Región 3
-            putPixel(xc + x + a, yc - y + b, color); // Región 4
+        while (2 * heightCuadrado * xx < 2 * widthCuadrado * yy) {
+            putPixel(x + xx + width, y + yy + height, color); // Región 1
+            putPixel(x - xx + width, y + yy + height, color); // Región 2
+            putPixel(x - xx + width, y - yy + height, color); // Región 3
+            putPixel(x + xx + width, y - yy + height, color); // Región 4
 
             if (p0 < 0) {
-                p0 += 2 * bSquared * (x + 1) + bSquared;
+                p0 += 2 * heightCuadrado * (xx + 1) + heightCuadrado;
             } else {
-                p0 += 2 * bSquared * (x + 1) + bSquared - 2 * aSquared * (y - 1);
-                y--;
+                p0 += 2 * heightCuadrado * (xx + 1) + heightCuadrado - 2 * widthCuadrado * (yy - 1);
+                yy--;
             }
-            x++;
+            xx++;
         }
 
-        double p1 = bSquared * (x + 0.5) * (x + 0.5) + aSquared * (y - 1) * (y - 1) - aSquared * bSquared;
+        double p1 = heightCuadrado * (xx + 0.5) * (xx + 0.5) + widthCuadrado * (yy - 1) * (yy - 1) - widthCuadrado * heightCuadrado;
 
-        while (y >= 0) {
-            putPixel(xc + x + a, yc + y + b, color); // Región 1
-            putPixel(xc - x + a, yc + y + b, color); // Región 2
-            putPixel(xc - x + a, yc - y + b, color); // Región 3
-            putPixel(xc + x + a, yc - y + b, color); // Región 4
+        while (yy >= 0) {
+            putPixel(x + xx + width, y + yy + height, color); // Región 1
+            putPixel(x - xx + width, y + yy + height, color); // Región 2
+            putPixel(x - xx + width, y - yy + height, color); // Región 3
+            putPixel(x + xx + width, y - yy + height, color); // Región 4
 
             if (p1 > 0) {
-                p1 += -2 * aSquared * (y - 1) + aSquared;
+                p1 += -2 * widthCuadrado * (yy - 1) + widthCuadrado;
             } else {
-                p1 += -2 * aSquared * (y - 1) + aSquared + 2 * bSquared * (x + 1);
-                x++;
+                p1 += -2 * widthCuadrado * (yy - 1) + widthCuadrado + 2 * heightCuadrado * (xx + 1);
+                xx++;
             }
-            y--;
+            yy--;
         }
 
         repaint();

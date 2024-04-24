@@ -81,6 +81,4 @@ El código es más compacto y fácil de entender debido a la reducción de casos
 Al usar coordenadas polares y simetría de ocho lados, el código refleja directamente la idea geométrica del problema, lo que lo hace más claro y fácil de mantener en el futuro.
 4. Mejora del rendimiento:
 Debido a que se realizan menos cálculos, el rendimiento general del algoritmo mejora. Es especialmente útil en situaciones donde se necesitan dibujar muchos círculos o curvas similares.
-5. Precisión:
-Al usar funciones trigonométricas estándar, se asegura una mayor precisión en los cálculos, especialmente cuando se dibujan formas a escalas diferentes.
 */
