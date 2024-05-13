@@ -92,6 +92,8 @@ public class Inundacion_18 extends JPanel {
 
         frame.setVisible(true);
 
-        panel1.fillRectangle(10, 10, 100, 100, Color.BLACK);
+        panel1.fillRectangle(10, 10, 300, 300, Color.BLACK);
     }
 }
+
+// java -Xss20m Inundacion_18.java

@@ -22,40 +22,29 @@ public class TiposLineasCirfunferencia_15 extends JPanel {
         buffer = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
     }
 
-    private void drawCircle(int xc, int yc, int r, int[] mascara, Color color) {
-        int x = 0;
-        int y = r;
+    public void drawCircle(int xc, int yc, int r, int[] mascara, Color color) {
+        int x = 0, y = r;
         int d = 3 - 2 * r;
-
-        while (x <= y) {
-            for (int i = 0; i < mascara.length; i++) {
-                if (mascara[i] == 1) {
-                    putPixel(xc + x, yc + y, color);
-                    putPixel(xc + y, yc + x, color);
-                    putPixel(xc - x, yc + y, color);
-                    putPixel(xc - y, yc + x, color);
-                    putPixel(xc + x, yc - y, color);
-                    putPixel(xc + y, yc - x, color);
-                    putPixel(xc - x, yc - y, color);
-                    putPixel(xc - y, yc - x, color);
-                }
-                if (i < mascara.length - 1) {
-                    // Rotar la mascara
-                    int temp = mascara[0];
-                    for (int j = 0; j < mascara.length - 1; j++) {
-                        mascara[j] = mascara[j + 1];
-                    }
-                    mascara[mascara.length - 1] = temp;
-                }
+        int maskIndex = 0;
+        while (y >= x) {
+            if (mascara[maskIndex % mascara.length] == 1) {
+                putPixel(xc + x, yc + y, color);
+                putPixel(xc + y, yc + x, color);
+                putPixel(xc - x, yc + y, color);
+                putPixel(xc - y, yc + x, color);
+                putPixel(xc + x, yc - y, color);
+                putPixel(xc + y, yc - x, color);
+                putPixel(xc - x, yc - y, color);
+                putPixel(xc - y, yc - x, color);
             }
-            x++;
-
-            if (d < 0) {
+            if (d <= 0) {
                 d = d + 4 * x + 6;
             } else {
-                y--;
                 d = d + 4 * (x - y) + 10;
+                y = y - 1;
             }
+            x++;
+            maskIndex++;
         }
     }
 
@@ -89,13 +78,13 @@ public class TiposLineasCirfunferencia_15 extends JPanel {
         int yc = 500 / 2;
         int r = 200;
 
-        int[] mascaraContinua = {1}; // Linea continua
-        int[] mascaraDiscontinua = {1, 0}; // Linea discontinua
-        int[] mascaraTipo = {1, 1, 1, 1, 1, 0, 0, 0, 0, 0}; // Tipo de linea
+        int[] circunferenciaCompleta = {1};
+        int[] mascaraCircunferenciaPunteada = {1, 1, 1, 0, 0, 0};
+        int[] circunferenciaTipo = {1, 0, 0, 0};
 
-        panel1.drawCircle(xc, yc, r, mascaraContinua, new Color(5, 5, 5));
-        panel1.drawCircle(xc, yc, r - 50, mascaraDiscontinua, new Color(204, 0, 0));
-        panel1.drawCircle(xc, yc, r - 100, mascaraTipo, new Color(0, 153, 51));
+        panel1.drawCircle(xc, yc, r, circunferenciaCompleta, new Color(5, 5, 5));
+        panel1.drawCircle(xc, yc, r - 50, mascaraCircunferenciaPunteada, new Color(204, 0, 0));
+        panel1.drawCircle(xc, yc, r - 100, circunferenciaTipo, new Color(0, 153, 51));
     }
 }
 
