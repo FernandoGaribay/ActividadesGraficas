@@ -174,7 +174,7 @@ public class ProyeccionPerspectiva_02 extends JPanel {
     }
 }
 
-class RotatingCubeFrame implements MouseMotionListener, MouseListener {
+class ProyeccionPerspectivaFrame implements MouseMotionListener, MouseListener {
 
     // VARIABLES --------------------------------------------------------------
     private JFrame frame = new JFrame();
@@ -192,7 +192,7 @@ class RotatingCubeFrame implements MouseMotionListener, MouseListener {
     private final double escala = 50;
     private int lastMouseX, lastMouseY;
 
-    public RotatingCubeFrame() {
+    public ProyeccionPerspectivaFrame() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Rotating Cube");
         frame.setSize(1200, 500);
@@ -209,7 +209,7 @@ class RotatingCubeFrame implements MouseMotionListener, MouseListener {
 
     // MAIN --------------------------------------------------------------------
     public static void main(String[] args) {
-        new RotatingCubeFrame();
+        new ProyeccionPerspectivaFrame();
     }
 
     public void actualizarControles() {
