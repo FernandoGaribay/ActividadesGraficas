@@ -10,9 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-public class Traslacion3D_03 extends JPanel implements KeyListener {
+public class Escalamiento3D_04 extends JPanel implements KeyListener {
 
-    GraficosTraslacion3D_03 buffer = new GraficosTraslacion3D_03(800, 800);
+    GraficosEscalamiento3D_04 buffer = new GraficosEscalamiento3D_04(800, 800);
 
     private double[] puntoCubo = {400, 400, 0};
     private double[] puntoFuga = {400, 400, 500};
@@ -39,7 +39,7 @@ public class Traslacion3D_03 extends JPanel implements KeyListener {
         {0, 4}, {1, 5}, {2, 6}, {3, 7}
     };
 
-    public Traslacion3D_03() {
+    public Escalamiento3D_04() {
         JFrame frame = new JFrame();
         frame.setSize(800, 800);
         frame.setResizable(false);
@@ -64,6 +64,7 @@ public class Traslacion3D_03 extends JPanel implements KeyListener {
             };
             verticesTrasladados[i] = trasladado;
         }
+
         for (int[] edge : edges) {
             double x0 = verticesTrasladados[edge[0]][0];
             double y0 = verticesTrasladados[edge[0]][1];
@@ -108,6 +109,10 @@ public class Traslacion3D_03 extends JPanel implements KeyListener {
                 traslacionZ += 10;
             case KeyEvent.VK_DOWN ->
                 traslacionZ -= 10;
+            case KeyEvent.VK_LEFT ->
+                escala -= 1;
+            case KeyEvent.VK_RIGHT ->
+                escala += 1;
             default -> {
             }
         }
@@ -123,17 +128,17 @@ public class Traslacion3D_03 extends JPanel implements KeyListener {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(Traslacion3D_03::new);
+        SwingUtilities.invokeLater(Escalamiento3D_04::new);
     }
 }
 
-class GraficosTraslacion3D_03 {
+class GraficosEscalamiento3D_04 {
 
     private BufferedImage buffer;
     private int WIDTH;
     private int HEIGHT;
 
-    public GraficosTraslacion3D_03(int WIDTH, int HEIGHT) {
+    public GraficosEscalamiento3D_04(int WIDTH, int HEIGHT) {
         this.WIDTH = WIDTH;
         this.HEIGHT = HEIGHT;
 
