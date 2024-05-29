@@ -142,9 +142,9 @@ public class Rotacion3D_05 extends JPanel implements KeyListener {
                 traslacionY -= 10;
             case KeyEvent.VK_S ->
                 traslacionY += 10;
-            case KeyEvent.VK_UP ->
+            case KeyEvent.VK_E ->
                 traslacionZ += 10;
-            case KeyEvent.VK_DOWN ->
+            case KeyEvent.VK_Q ->
                 traslacionZ -= 10;
             case KeyEvent.VK_LEFT ->
                 escala -= 1;
