@@ -13,17 +13,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-public class Superficie3D_08 extends JPanel implements KeyListener, Runnable {
+public class Cilindro3D_09 extends JPanel implements KeyListener, Runnable {
 
-    GraficosSuperficie3D_08 buffer = new GraficosSuperficie3D_08(800, 800);
+    GraficosCilindro3D_09 buffer = new GraficosCilindro3D_09(800, 800);
 
     private double anguloMaximo = 2 * Math.PI;
     private int numPuntos = 50;
     private double anguloIncremento = anguloMaximo / numPuntos;
-    private double escala = 1.5;
-
-    private double radioMayor = 100;
-    private double radioMenor = 50;
+    private double escala = 50;
 
     private boolean animacionActiva = false;
     private Thread hiloAnimacion;
@@ -36,7 +33,7 @@ public class Superficie3D_08 extends JPanel implements KeyListener, Runnable {
     private double anguloY = 0;
     private double anguloZ = 0;
 
-    public Superficie3D_08() {
+    public Cilindro3D_09() {
         JFrame frame = new JFrame();
         frame.setSize(800, 800);
         frame.setResizable(false);
@@ -49,9 +46,9 @@ public class Superficie3D_08 extends JPanel implements KeyListener, Runnable {
         for (double alpha = 0; alpha < anguloMaximo; alpha += anguloIncremento) {
             for (double beta = 0; beta < anguloMaximo; beta += anguloIncremento) {
                 double[] vertice = new double[3];
-                vertice[0] = (radioMayor + radioMenor * Math.cos(alpha)) * Math.cos(beta);
-                vertice[1] = (radioMayor + radioMenor * Math.cos(alpha)) * Math.sin(beta);
-                vertice[2] = radioMenor * Math.sin(alpha);
+                vertice[0] = (2 + Math.cos(alpha)) * Math.cos(beta);
+                vertice[1] = (2 + Math.cos(alpha)) * Math.sin(beta);
+                vertice[2] = alpha;
                 vertices.add(vertice);
             }
         }
@@ -80,19 +77,28 @@ public class Superficie3D_08 extends JPanel implements KeyListener, Runnable {
             verticesTrasladados[i] = trasladado;
         }
 
-        for (int i = 0; i < vertices.size() - 1; i++) {
-            double x0 = verticesTrasladados[i][0];
-            double y0 = verticesTrasladados[i][1];
-            double z0 = verticesTrasladados[i][2];
+        for (int i = 0; i < numPuntos - 1; i++) {
+            for (int j = 0; j < numPuntos; j++) {
+                int index0 = i * numPuntos + j;
+                int index1 = (i + 1) * numPuntos + j;
+                int index2 = i * numPuntos + (j + 1) % numPuntos; 
+                int index3 = (i + 1) * numPuntos + (j + 1) % numPuntos;
 
-            double x1 = verticesTrasladados[i + 1][0];
-            double y1 = verticesTrasladados[i + 1][1];
-            double z1 = verticesTrasladados[i + 1][2];
+                double[] v0 = verticesTrasladados[index0];
+                double[] v1 = verticesTrasladados[index1];
+                double[] v2 = verticesTrasladados[index2];
+                double[] v3 = verticesTrasladados[index3];
 
-            Point2D p1 = punto3D_a_2D(x0, y0, z0);
-            Point2D p2 = punto3D_a_2D(x1, y1, z1);
+                Point2D p0 = punto3D_a_2D(v0[0], v0[1], v0[2]);
+                Point2D p1 = punto3D_a_2D(v1[0], v1[1], v1[2]);
+                Point2D p2 = punto3D_a_2D(v2[0], v2[1], v2[2]);
+                Point2D p3 = punto3D_a_2D(v3[0], v3[1], v3[2]);
 
-            buffer.drawLine((int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY(), Color.BLACK);
+                buffer.drawLine((int) p0.getX(), (int) p0.getY(), (int) p1.getX(), (int) p1.getY(), Color.BLACK);
+                buffer.drawLine((int) p0.getX(), (int) p0.getY(), (int) p2.getX(), (int) p2.getY(), Color.BLACK);
+                buffer.drawLine((int) p1.getX(), (int) p1.getY(), (int) p3.getX(), (int) p3.getY(), Color.BLACK);
+                buffer.drawLine((int) p2.getX(), (int) p2.getY(), (int) p3.getX(), (int) p3.getY(), Color.BLACK);
+            }
         }
 
         g.drawImage(buffer.getBuffer(), 0, 0, null);
@@ -133,14 +139,14 @@ public class Superficie3D_08 extends JPanel implements KeyListener, Runnable {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(Superficie3D_08::new);
+        SwingUtilities.invokeLater(Cilindro3D_09::new);
     }
 
     @Override
     public void keyPressed(KeyEvent ke) {
         int key = ke.getKeyCode();
-        
-        switch(key){
+
+        switch (key) {
             case KeyEvent.VK_W:
                 anguloX += 2;
                 break;
@@ -161,7 +167,7 @@ public class Superficie3D_08 extends JPanel implements KeyListener, Runnable {
                 break;
             case KeyEvent.VK_SPACE:
                 animacionActiva = !animacionActiva;
-                if(animacionActiva){
+                if (animacionActiva) {
                     new Thread(this).start();
                 }
                 break;
@@ -180,28 +186,28 @@ public class Superficie3D_08 extends JPanel implements KeyListener, Runnable {
     @Override
     public void run() {
         while (animacionActiva) {
-//            anguloX += 1;
+            anguloX += 1;
             anguloY += 1;
-            anguloZ += 1;
+//            anguloZ += 1;
 
             repaint();
             try {
                 Thread.sleep(16);
             } catch (InterruptedException ex) {
-                Logger.getLogger(RotacionAutomatica3D_06.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Superficie3D_08.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
     }
 }
 
-class GraficosSuperficie3D_08 {
+class GraficosCilindro3D_09 {
 
     private BufferedImage buffer;
     private int WIDTH;
     private int HEIGHT;
 
-    public GraficosSuperficie3D_08(int WIDTH, int HEIGHT) {
+    public GraficosCilindro3D_09(int WIDTH, int HEIGHT) {
         this.WIDTH = WIDTH;
         this.HEIGHT = HEIGHT;
 

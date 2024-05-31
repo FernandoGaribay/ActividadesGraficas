@@ -17,10 +17,10 @@ public class CurvaExplicita3D_07 extends JPanel implements KeyListener, Runnable
 
     GraficosCurvaExplicita3D_07 buffer = new GraficosCurvaExplicita3D_07(800, 800);
 
-    private double anguloMaximo = 2 * Math.PI;
-    private int numPuntos = 50;
+    private double anguloMaximo = Math.PI;
+    private int numPuntos = 100;
     private double anguloIncremento = anguloMaximo / numPuntos;
-    private double escala = 1.5;
+    private double escala = 100;
 
     private double radioMayor = 100;
     private double radioMenor = 50;
@@ -46,14 +46,12 @@ public class CurvaExplicita3D_07 extends JPanel implements KeyListener, Runnable
         frame.addKeyListener(this);
         frame.setVisible(true);
 
-        for (double alpha = 0; alpha < anguloMaximo; alpha += anguloIncremento) {
-            for (double beta = 0; beta < anguloMaximo; beta += anguloIncremento) {
-                double[] vertice = new double[3];
-                vertice[0] = (radioMayor + radioMenor * Math.cos(alpha)) * Math.cos(beta);
-                vertice[1] = (radioMayor + radioMenor * Math.cos(alpha)) * Math.sin(beta);
-                vertice[2] = radioMenor * Math.sin(alpha);
-                vertices.add(vertice);
-            }
+        for (double angulo = -Math.PI; angulo <= anguloMaximo; angulo += anguloIncremento) {
+            double[] vertice = new double[3];
+            vertice[0] = Math.cos(3 * angulo);
+            vertice[1] = 2 * Math.pow(Math.cos(angulo), 2);
+            vertice[2] = Math.sin(2 * angulo);
+            vertices.add(vertice);
         }
     }
 
@@ -139,8 +137,8 @@ public class CurvaExplicita3D_07 extends JPanel implements KeyListener, Runnable
     @Override
     public void keyPressed(KeyEvent ke) {
         int key = ke.getKeyCode();
-        
-        switch(key){
+
+        switch (key) {
             case KeyEvent.VK_W:
                 anguloX += 2;
                 break;
@@ -161,7 +159,7 @@ public class CurvaExplicita3D_07 extends JPanel implements KeyListener, Runnable
                 break;
             case KeyEvent.VK_SPACE:
                 animacionActiva = !animacionActiva;
-                if(animacionActiva){
+                if (animacionActiva) {
                     new Thread(this).start();
                 }
                 break;
