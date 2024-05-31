@@ -22,9 +22,6 @@ public class CurvaExplicita3D_07 extends JPanel implements KeyListener, Runnable
     private double anguloIncremento = anguloMaximo / numPuntos;
     private double escala = 100;
 
-    private double radioMayor = 100;
-    private double radioMenor = 50;
-
     private boolean animacionActiva = false;
     private Thread hiloAnimacion;
 
